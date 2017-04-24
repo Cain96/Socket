@@ -3,14 +3,13 @@
 //
 
 #include <sys/types.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <netdb.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-# include <winsock2.h>
 
 int main(int argc, char **argv) {
     int sock, csock;
@@ -32,6 +31,7 @@ int main(int argc, char **argv) {
         perror("setsockopt");
         exit(1);
     }
+
 /* client 受付用ソケットの情報設定 */
     //bzero(&svr, sizeof(svr));
     memset(&svr, 0, sizeof(svr));
