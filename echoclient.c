@@ -9,19 +9,14 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 
-void send_data(int sock, char *text);
-char *get_data();
+#define STRLEN 128
 
 int main(int argc, char *argv[]) {
-    char text[128];
-    char rtext[128];
-    int sock, csock;
+    char text[STRLEN];
+    char *rtext;
+    int sock;
     struct sockaddr_in svr;
-    struct sockaddr_in clt;
-    struct hostent *cp;
-    int clen;
     char rbuf[1024];
-    int nbytes;
     int reuse;
     struct hostent *host;
 
@@ -62,39 +57,22 @@ int main(int argc, char *argv[]) {
 
     /*文字列をキーボードから入力*/
     while (scanf("%s", text) != EOF) {
-
+        
         /* データを送出 */
-        send_data(sock, text);
+        int text_len = sizeof(text);
+        write(sock, text, text_len);
 
         /* データを受信 */
-        bzero(rtext, 128);
-	if(read(sock, rtext, strlen(rtext))<0){
+	if(read(sock, rtext, STRLEN)<0){
 		perror("get_data");
 		exit(1);
 	}
 
         /* 文字列を出力 */
-    	write(1, rtext, strlen(rtext));
+	printf("%s\n", rtext);
    }
 
     close(sock);
     printf("closed\n");
 }
 
-/* データ送出 */
-void send_data(int sock, char *text) {
-    int text_len;
-
-    text_len = sizeof(text);
-    write(sock, text, text_len);
-}
-
-/* データ受信 */
-char* get_data(int sock) {
-    char* rtext;
-    if (read(sock, rtext, sizeof(rtext)) < 0){
-        perror("get_data");
-        exit(1);
-    }
-    return rtext;
-}
