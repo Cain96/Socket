@@ -75,7 +75,6 @@ int main(int argc, char **argv) {
 				if(read(0,buf, 1024)!=0){
 					write(csock, buf, sizeof(buf));
 				}else{
-					printf("break");
 					break;
 				}
 			}
@@ -84,6 +83,8 @@ int main(int argc, char **argv) {
 				/* ソケットから読み込み端末に出力 */
 				if ((nbytes = read(csock, rbuf, sizeof(rbuf))) < 0) {
                 			perror("read");
+				} else if(nbytes == 0){
+					break;
             			} else {
                 			write(1, rbuf, nbytes);
             			}
