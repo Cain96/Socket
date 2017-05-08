@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
     do{
                 /* 入力を監視するファイル記述子の集合を変数 rfds に
 セットする */
-  	FD_ZERO(&rfds); /* rfds を空集合に初期化 */
+  	    FD_ZERO(&rfds); /* rfds を空集合に初期化 */
         FD_SET(0,&rfds); /* 標準入力 */
         FD_SET(sock,&rfds); /* クライアントを受け付けたソケット */
         /* 監視する待ち時間を 1 秒に設定 */

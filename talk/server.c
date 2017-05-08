@@ -59,14 +59,14 @@ int main(int argc, char **argv) {
         cp = gethostbyaddr((char *) &clt.sin_addr, sizeof(struct in_addr),
                            AF_INET);
         printf("[%s]\n", cp->h_name);
-	do{ 
-		/* 入力を監視するファイル記述子の集合を変数 rfds にセットする */ 
+	do{
+		/* 入力を監視するファイル記述子の集合を変数 rfds にセットする */
 		FD_ZERO(&rfds); /* rfds を空集合に初期化 */
 		FD_SET(0,&rfds); /* 標準入力 */
 		FD_SET(csock,&rfds); /* クライアントを受け付けたソケット */
 		/* 監視する待ち時間を 1 秒に設定 */
 		tv.tv_sec = 1; tv.tv_usec = 0;
-		/* 標準入力とソケットからの受信を同時に監視する */ 
+		/* 標準入力とソケットからの受信を同時に監視する */
 		if(select(csock+1,&rfds,NULL,NULL,&tv)>0) {
 			if(FD_ISSET(0,&rfds)) {
 				/* 標準入力から入力があったなら */
@@ -85,9 +85,9 @@ int main(int argc, char **argv) {
                 			perror("read");
 				} else if(nbytes == 0){
 					break;
-            			} else {
-                			write(1, rbuf, nbytes);
-            			}
+  			} else {
+    			write(1, rbuf, nbytes);
+  			}
 			}
 		}
 	} while(1); /* 繰り返す */
@@ -95,4 +95,3 @@ int main(int argc, char **argv) {
         printf("closed\n");
     } while (1); /* 次の接続要求を繰り返し受け付ける */
 }
-
